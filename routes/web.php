@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SubscriptionController;
+use App\Models\Plan;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -8,8 +10,12 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $plans = Plan::all();
+    return view('dashboard', ['plans' => $plans]);
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/checkout', [SubscriptionController::class, 'index'])
+    ->name('checkout');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -17,4 +23,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
