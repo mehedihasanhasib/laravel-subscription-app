@@ -10,7 +10,6 @@ class SubscriptionController extends Controller
 {
     public function index()
     {
-
-        return View('checkout');
+        return View('checkout');   
     }
 }
