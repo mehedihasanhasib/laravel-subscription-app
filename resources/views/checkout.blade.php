@@ -8,19 +8,21 @@
     <div class="py-12">
         <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <form class="p-6" action="" method="post">
-
+                {{-- checkout form starts --}}
+                <form id="form" class="p-6" action="#" method="POST">
+                    @csrf
                     <div class="mb-3">
                         <x-input-label for="name" :value="__('Name')" />
+
                         <x-text-input id="name" class="block mt-1 w-full" type="text" name="name"
-                            :value="old('name')" required autofocus autocomplete="name" />
+                            :value="old('name')" autofocus autocomplete="name" />
                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
 
                     <div class="mb-3">
                         <x-input-label for="card" :value="__('Card Details')" />
 
-                        <div id="card-element">
+                        <div id="card-element" class="mt-2 border h-9 rounded text-xl">
 
                         </div>
                     </div>
@@ -30,18 +32,26 @@
                             {{ __('Pay') }}
                         </x-primary-button>
                     </div>
-
                 </form>
+                {{-- checkout form ends --}}
             </div>
         </div>
     </div>
 
 
     <script>
+        // getting & mounting card element from stripe
         const stripe = Stripe('{{ config('cashier.key') }}');
         const elements = stripe.elements();
-        const cardElement = elements.create('payment');
+        const cardElement = elements.create('card');
         cardElement.mount('#card-element');
+
+        // submitting form with setup intent
+        const form = document.getElementById('form');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+        })
     </script>
 
 </x-app-layout>

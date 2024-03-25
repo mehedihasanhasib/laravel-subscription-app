@@ -8,8 +8,10 @@ use Spatie\FlareClient\View;
 
 class SubscriptionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return View('checkout');   
+        return View('checkout', [
+            'intent' => $request->user()->createSetupIntent() 
+        ]);   
     }
 }
