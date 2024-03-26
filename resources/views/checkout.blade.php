@@ -28,7 +28,7 @@
                     </div>
 
                     <div class="flex items-center justify-end mt-4">
-                        <x-primary-button class="ms-4">
+                        <x-primary-button id="submit-button" class="ms-4" data-secret="{{ $intent->client_secret }}">
                             {{ __('Pay') }}
                         </x-primary-button>
                     </div>
@@ -48,9 +48,25 @@
 
         // submitting form with setup intent
         const form = document.getElementById('form');
+        const button = document.getElementById('submit-button');
+        const name = document.getElementById('name');
 
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
+            button.disabled = true;
+
+            const setupIntent = await stripe.confirmCardSetup(
+                button.dataset.secret, {
+                    payment_method: {
+                        card: cardElement,
+                        billing_details: {
+                            name: name.value
+                        }
+                    }
+                }
+            )
+
+            console.log(setupIntent);
         })
     </script>
 

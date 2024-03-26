@@ -11,7 +11,7 @@ class SubscriptionController extends Controller
     public function index(Request $request)
     {
         return View('checkout', [
-            'intent' => $request->user()->createSetupIntent() 
-        ]);   
+            'intent' => $request->user()->createSetupIntent()
+        ]);
     }
 }
