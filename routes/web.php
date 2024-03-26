@@ -16,6 +16,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/checkout', [SubscriptionController::class, 'index'])
     ->name('checkout');
+Route::post('/checkout', [SubscriptionController::class, 'store']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

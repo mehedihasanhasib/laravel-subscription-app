@@ -14,4 +14,9 @@ class SubscriptionController extends Controller
             'intent' => $request->user()->createSetupIntent()
         ]);
     }
+
+    public function store(Request $request)
+    {
+        dd($request->all());
+    }
 }
