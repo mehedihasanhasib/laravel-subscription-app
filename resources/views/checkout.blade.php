@@ -55,7 +55,10 @@
             e.preventDefault();
             button.disabled = true;
 
-            const setupIntent = await stripe.confirmCardSetup(
+            const {
+                setupIntent,
+                error
+            } = await stripe.confirmCardSetup(
                 button.dataset.secret, {
                     payment_method: {
                         card: cardElement,
@@ -66,7 +69,18 @@
                 }
             )
 
-            console.log(setupIntent);
+            if (error) {
+                //
+            } else {
+                const tokenInput = document.createElement('input');
+
+                tokenInput.setAttribute('type', 'hidden');
+                tokenInput.setAttribute('name', 'paymeny_method');
+                tokenInput.setAttribute('value', setupIntent.payment_method);
+                form.appendChild(tokenInput);
+
+                form.submit();
+            }
         })
     </script>
 
