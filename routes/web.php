@@ -9,14 +9,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    $plans = Plan::all();
-    return view('dashboard', ['plans' => $plans]);
-})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/checkout', [SubscriptionController::class, 'index'])
-    ->name('checkout');
-Route::post('/checkout', [SubscriptionController::class, 'store']);
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', [SubscriptionController::class, 'dashboard'])
+        ->name('dashboard');
+    Route::get('/checkout', [SubscriptionController::class, 'index'])
+        ->name('checkout');
+    Route::post('/checkout', [SubscriptionController::class, 'store']);
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

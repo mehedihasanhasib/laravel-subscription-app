@@ -8,6 +8,13 @@ use Spatie\FlareClient\View;
 
 class SubscriptionController extends Controller
 {
+
+    public function dashboard()
+    {
+        $plans = Plan::all();
+        return view('dashboard', ['plans' => $plans]);
+    }
+
     public function index(Request $request)
     {
         return View("checkout", [
