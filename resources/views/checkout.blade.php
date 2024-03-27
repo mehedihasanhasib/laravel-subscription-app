@@ -27,6 +27,8 @@
                         </div>
                     </div>
 
+                    <input type="hidden" name="slug" value="{{ $slug }}">
+
                     <div class="flex items-center justify-end mt-4">
                         <x-primary-button id="submit-button" class="ms-4" data-secret="{{ $intent->client_secret }}">
                             {{ __('Pay') }}
@@ -75,7 +77,7 @@
                 const tokenInput = document.createElement('input');
 
                 tokenInput.setAttribute('type', 'hidden');
-                tokenInput.setAttribute('name', 'paymeny_method');
+                tokenInput.setAttribute('name', 'payment_method');
                 tokenInput.setAttribute('value', setupIntent.payment_method);
                 form.appendChild(tokenInput);
 
