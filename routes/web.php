@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubscriptionController;
 use App\Models\Plan;
@@ -17,6 +18,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/checkout', [SubscriptionController::class, 'index'])
         ->name('checkout');
     Route::post('/checkout', [SubscriptionController::class, 'store']);
+});
+
+Route::middleware(['auth', 'verified'])->prefix('account')->group(function () {
+    Route::get('/', [AccountController::class, 'index']);
 });
 
 Route::middleware('auth')->group(function () {

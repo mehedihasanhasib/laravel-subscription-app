@@ -30,13 +30,9 @@ class SubscriptionController extends Controller
             "slug" => "required",
         ]);
 
-        $plan = Plan::where("slug", $request->slug)
-            ->get()
-            ->first();
+        $plan = Plan::where("slug", $request->slug)->get()->first();
 
-        $request
-            ->user()
-            ->newSubscription("default", $plan->stripe_id)
+        $request->user()->newSubscription("default", $plan->stripe_id)
             ->create($request->payment_method);
 
         return back();
